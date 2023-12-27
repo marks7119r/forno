@@ -17,10 +17,11 @@
     <!-- Include jQuery -->
 
   <!-- Include jQuery Confirm plugin CSS -->
-  <link rel="stylesheet" href="jquery-confirm-v3.3.4/dist/jquery-confirm.min.css">
+  <link rel="stylesheet" href="jquery-confirm.min.css">
+
 
   <!-- Include jQuery Confirm plugin JavaScript -->
-  <script src="jquery-confirm-v3.3.4/dist/jquery-confirm.min.js"></script>
+  <script src="jquery-confirm.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
@@ -33,16 +34,16 @@
   <nav>
     <ul class="nav-flex-row">
       <li class="nav-item">
-        <a href="#about">About</a>
+        <a href="About.html">About</a>
       </li>
       <li class="nav-item">
-        <a href="#reservation">Reservation</a>
+        <a href="Reservation.html">Reservation</a>
       </li>
       <li class="nav-item">
         <a href="#menu">Menu</a>
       </li>
       <li class="nav-item">
-        <a href="#shop">Shop</a>
+        <a href="index.html">Home</a>
       </li>
     </ul>
   </nav>
@@ -98,15 +99,15 @@
         <h3>
           Make a booking
         </h3>
-      <form class="media-centered" id="reservationForm" >
+      <form class="media-centered" id="reservationForm" method="POST" action="">
           <div class="form-group">
             <p>
               Please leave your number we will call to make a reservation
             </p>
-            <input type="name" class="form-control" id="exampleInputName1" aria-describedby="nameHelp" placeholder="Enter your name">
+            <input type="name" class="form-control" name="name" id="exampleInputName1" aria-describedby="nameHelp" placeholder="Enter your name">
           </div>
           <div class="form-group">
-            <input type="number" class="form-control" id="exampleInputphoneNumber1" placeholder="Enter your phone number">
+            <input type="number" class="form-control" name="phoneNumber" id="exampleInputphoneNumber1" placeholder="Enter your phone number">
           </div>
           <button type="submit" class="btn btn-primary">Submit</button>
       </form>
@@ -137,42 +138,42 @@
 
 
     <script>
-   $('button.btn').on('click', function (event) {
-    // Prevent the default form submission behavior
-    event.preventDefault();
+      $(document).ready(function () {
+        $('button.btn').on('click', function (event) {
+            // Prevent the default form submission behavior
+            event.preventDefault();
 
-    Swal.fire({
-        title: 'Confirm!',
-        text: 'Are you sure you want to submit the form?',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, submit!'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            let exampleInputName1 = $('#exampleInputName1').val();
-            let exampleInputphoneNumber1 = $('#exampleInputphoneNumber1').val();
+            // Retrieve form data
+            var formData = {
+                name: $('#exampleInputName1').val(),
+                phoneNumber: $('#exampleInputphoneNumber1').val()
+            };
 
-            if (exampleInputName1 === '') {
-                Swal.fire('Error', 'Please enter your name', 'error');
-                return false;
-            }
-
-            if (exampleInputphoneNumber1 === '' || exampleInputphoneNumber1.length !== 11) {
-                Swal.fire('Error', 'Please enter a valid 11-digit phone number', 'error');
-                return false;
-            }
-
-            Swal.fire('Success', 'Form has been submitted', 'success');
-            // Your form submission logic here
-        }
+            // Perform AJAX request to submit.php
+            $.ajax({
+                type: 'POST',
+                url: 'submit.php',
+                data: formData,
+                dataType: 'json',
+                success: function (response) {
+                    if (response.status === 'success') {
+                        Swal.fire('Success', response.message, 'success');
+                        // Additional logic after successful form submission
+                    } else {
+                        Swal.fire('Error', response.message, 'error');
+                    }
+                },
+                error: function () {
+                    Swal.fire('Error', 'An error occurred during form submission.', 'error');
+                }
+            });
+        });
     });
-});
 
 
+</script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
-      </script>
   <script
   src="https://code.jquery.com/jquery-3.7.1.min.js"
   integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="

@@ -29,7 +29,7 @@
 
 .section-intro {
     height: 820px;
-    background-image: url(img/petr-sevcovic-qE1jxYXiwOA-unsplash.jpg);
+    background-image: url(img/carlos-lindner-sjBYA8dAw54-unsplash.jpg);
     background-size: cover;
     display: flex;
     flex-direction: column;
@@ -40,7 +40,7 @@
 .section-intro h1 {
     text-align: center;
     color: #ffffff;
-    background-color:rgba(0,0,255,0.1);
+    background-color:rgba(121, 121, 232, 0.1);
     font-size: 4em;
     font-weight: 700;
 }
