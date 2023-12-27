@@ -133,42 +133,40 @@
 
 
     <script>
-   $('button.btn').on('click', function (event) {
-    // Prevent the default form submission behavior
-    event.preventDefault();
+      $(document).ready(function () {
+        $('button.btn').on('click', function (event) {
+            // Prevent the default form submission behavior
+            event.preventDefault();
 
-    Swal.fire({
-        title: 'Confirm!',
-        text: 'Are you sure you want to submit the form?',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, submit!'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            let exampleInputName1 = $('#exampleInputName1').val();
-            let exampleInputphoneNumber1 = $('#exampleInputphoneNumber1').val();
+            // Retrieve form data
+            var formData = {
+                name: $('#exampleInputName1').val(),
+                phoneNumber: $('#exampleInputphoneNumber1').val()
+            };
 
-            if (exampleInputName1 === '') {
-                Swal.fire('Error', 'Please enter your name', 'error');
-                return false;
-            }
-
-            if (exampleInputphoneNumber1 === '' || exampleInputphoneNumber1.length !== 11) {
-                Swal.fire('Error', 'Please enter a valid 11-digit phone number', 'error');
-                return false;
-            }
-
-            Swal.fire('Success', 'Form has been submitted', 'success');
-            // Your form submission logic here
-        }
+            // Perform AJAX request to submit.php
+            $.ajax({
+                type: 'POST',
+                url: 'submit.php',
+                data: formData,
+                dataType: 'json',
+                success: function (response) {
+                    if (response.status === 'success') {
+                        Swal.fire('Success', response.message, 'success');
+                        // Additional logic after successful form submission
+                    } else {
+                        Swal.fire('Error', response.message, 'error');
+                    }
+                },
+                error: function () {
+                    Swal.fire('Error', 'An error occurred during form submission.', 'error');
+                }
+            });
+        });
     });
-});
 
 
-
-      </script>
+</script>
   <script
   src="https://code.jquery.com/jquery-3.7.1.min.js"
   integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
