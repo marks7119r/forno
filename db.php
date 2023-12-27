@@ -1,18 +1,21 @@
 <?php
-error_reporting(E_ALL);
+// Database configuration
 ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+$host = "localhost";
+$username = "marks";
+$password = "marks";
+$database = "DB";
 
-$dsn= "mysql:host=localhost;dbname=FornoDB";
-$username="mark";
-$password = "mark";
+// Create a connection
+$con = new mysqli($host, $username, $password, $database);
 
-
-try {
-    $db =new PDO($dsn, $username,$password);
-    echo "connected";
-} catch (PDOException $e) {
-    $error_message = $e->getMessage();
-    exit();
-    //throw $th;
+// Check the connection
+if ($con->connect_error) {
+    die("Connection failed: " . $con->connect_error);
 }
+
+// Set the charset to utf8 (optional)
+$con->set_charset("utf8");
 ?>
