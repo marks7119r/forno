@@ -45,12 +45,33 @@
             </div>
         </div>
     </div>
+    <script>
+        $(document).ready(function () {
+            // Simulate a condition where credentials are invalid
+            var credentialsInvalid = true;
 
+            if (credentialsInvalid) {
+                $.confirm({
+                    title: 'Invalid Credentials',
+                    content: 'The username or password is incorrect. Please try again.',
+                    type: 'red',
+                    buttons: {
+                        ok: {
+                            text: 'OK',
+                            btnClass: 'btn-red',
+                        }
+                    }
+                });
+            }
+        });
+    </script>
     <!-- Add your existing scripts, including jQuery and jQuery Confirm plugin -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
     <!-- Add any additional scripts you need -->
 
 </body>
