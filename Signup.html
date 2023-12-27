@@ -47,7 +47,43 @@
         </div>
     </div>
 
+
     <!-- Add your existing scripts, including jQuery and jQuery Confirm plugin -->
+    <script>
+$(document).ready(function () {
+    $('#signupForm').submit(function (event) {
+        event.preventDefault();
+
+        $.ajax({
+            type: 'POST',
+            url: 'signup.php',
+            data: $(this).serialize(),
+            dataType: 'json',
+            success: function (response) {
+                if (response.status === 'success') {
+                    Swal.fire('Success', response.message, 'success');
+                    // Additional logic after successful form submission
+                } else {
+                    $.confirm({
+                        title: 'Error',
+                        content: response.message,
+                        type: 'red',
+                        typeAnimated: true,
+                        buttons: {
+                            close: function () {
+                                // Handle error
+                            }
+                        }
+                    });
+                }
+            },
+            error: function () {
+                Swal.fire('Error', 'An error occurred during form submission.', 'error');
+            }
+        });
+    });
+});
+</script>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>

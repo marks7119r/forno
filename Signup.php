@@ -9,15 +9,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = $_POST['password'];
 
     if (!empty($username) && !empty($password)) {
-        $query = "INSERT INTO users (username, password) VALUES ('$username', '$password')";
+        // Check if the username already exists
+        $checkQuery = "SELECT * FROM users WHERE username='$username'";
+        $checkResult = mysqli_query($con, $checkQuery);
 
-        if (mysqli_query($con, $query)) {
-            echo "<script type='text/javascript'> alert('Successfully Registered')</script>";
+        if (mysqli_num_rows($checkResult) > 0) {
+            echo json_encode(array('status' => 'error', 'message' => 'Username already exists.'));
+            exit();
+        }
+
+        // Insert the new user into the database
+        $insertQuery = "INSERT INTO users (username, password) VALUES ('$username', '$password')";
+
+        if (mysqli_query($con, $insertQuery)) {
+            echo json_encode(array('status' => 'success', 'message' => 'Successfully Registered.'));
+            exit();
         } else {
-            echo "<script type='text/javascript'> alert('Error: " . mysqli_error($con) . "')</script>";
+            echo json_encode(array('status' => 'error', 'message' => 'Error: ' . mysqli_error($con)));
+            exit();
         }
     } else {
-        echo "<script type='text/javascript'> alert('Enter Valid username and password')</script>";
+        echo json_encode(array('status' => 'error', 'message' => 'Enter valid username and password.'));
+        exit();
     }
 }
 ?>
