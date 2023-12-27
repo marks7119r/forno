@@ -11,6 +11,17 @@
 
     <title>Restaurant Website</title>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <!-- Include jQuery -->
+
+  <!-- Include jQuery Confirm plugin CSS -->
+  <link rel="stylesheet" href="jquery-confirm-v3.3.4/dist/jquery-confirm.min.css">
+
+  <!-- Include jQuery Confirm plugin JavaScript -->
+  <script src="jquery-confirm-v3.3.4/dist/jquery-confirm.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
 
   </head>
   <body>
@@ -123,30 +134,41 @@
 
 
     <script>
-      $(document).ready(function() {
-        // Capture form submission event
-        $('#reservationForm').submit(function(event) {
-          // Prevent the default form submission
-          event.preventDefault();
+   $('button.btn').on('click', function (event) {
+    // Prevent the default form submission behavior
+    event.preventDefault();
 
-          var name = $('#exampleInputName1').val();
-      var phoneNumber = $('#exampleInputphoneNumber1').val();
+    Swal.fire({
+        title: 'Confirm!',
+        text: 'Are you sure you want to submit the form?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, submit!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            let exampleInputName1 = $('#exampleInputName1').val();
+            let exampleInputphoneNumber1 = $('#exampleInputphoneNumber1').val();
 
-      if (name && phoneNumber && phoneNumber.length === 11 && !isNaN(phoneNumber)) {
-        // Show an alert message
-        // this step for securing the name input from any attacks (like xss)
-        var SanitizedName = encodeURIComponent(name);
+            if (exampleInputName1 === '') {
+                Swal.fire('Error', 'Please enter your name', 'error');
+                return false;
+            }
 
-        alert('Reservation submitted successfully!');
-      } else {
-        // If fields are not filled, show an error message
-        alert('Please fill in both name and phone number fields.');
-      }
-      
-          // Show an alert message
-          alert('Thanks '+ name +' \n We Will Contact you as Soon as Possible !');
-        });
-      });
+            if (exampleInputphoneNumber1 === '' || exampleInputphoneNumber1.length !== 11) {
+                Swal.fire('Error', 'Please enter a valid 11-digit phone number', 'error');
+                return false;
+            }
+
+            Swal.fire('Success', 'Form has been submitted', 'success');
+            // Your form submission logic here
+        }
+    });
+});
+
+
+
       </script>
   <script
   src="https://code.jquery.com/jquery-3.7.1.min.js"
