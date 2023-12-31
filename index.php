@@ -62,7 +62,7 @@
       <h1>Forno</h1>
     </header>
     <div class="link-to-book-wrapper">
-      <a class="link-to-book" href="#reservations">Book a table</a>
+      <a id="book" class="link-to-book" href="Reservation.html">Book a table</a>
     </div>
   </section>
 
@@ -161,6 +161,18 @@
     }else{
       $("#Logoutbtn").hide();
     }
+    $("#book").on("click", function (event) {
+      // Prevent the default link behavior
+      event.preventDefault();
+
+      // Check if the user is logged in
+      if (userCookie) {
+        // User is logged in, proceed with the booking logic here
+      window.location.href = "Reservation.html";
+      } else {
+        // User is not logged in, show a message or redirect to the login page
+        Swal.fire('Login Required', 'Please log in to book a table.', 'info');
+      }})
   });
 
   // Function to get the value of a cookie
