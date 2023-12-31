@@ -11,8 +11,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $result = mysqli_query($con, $query);
 
     if (mysqli_num_rows($result) == 1) {
+        // Set a cookie upon successful login
+        setcookie("username", $username, time() + (86400 * 30), "/"); // Cookie valid for 30 days
+
         // Redirect to index.html on successful login
-        header("Location: index.html");
+        header("Location: index.php");
         exit();
     } else {
         // Redirect to login.html if login is not successful
@@ -21,16 +24,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 ?>
-<?php
-    // Start the session to access session variables
-    session_start();
-
-    // Check if the user is logged in
-    if (isset($_SESSION['username'])) {
-        // User is logged in, display a welcome message or other content
-        echo '<p>Welcome, ' . $_SESSION['username'] . '!</p>';
-    } else {
-        // User is not logged in, display signup button
-        echo '<button id="signupButton">Sign Up</button>';
-    }
-    ?>

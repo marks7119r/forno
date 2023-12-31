@@ -26,7 +26,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
-
+    <?php
+    // Include the modified PHP script here
+    ?>
   </head>
   <body>
     
@@ -40,16 +42,20 @@
         <a href="#menu">Menu</a>
       </li>
       <li class="nav-item">
-        <a href="index.html">Home</a>
+        <a href="index.php">Home</a>
       </li>
       <li class="nav-item">
-        <a href="Signup.html">Signup</a>
+        <a id="signupButton" href="Signup.html">Signup</a>
       </li>
       <li class="nav-item">
-        <a href="Login.html">login</a>
+        <a id="Loginbtn" href="Login.html">login</a>
+      </li>
+      <li class="nav-item">
+        <a id="Logoutbtn" href="index.php">Logout</a>
       </li>
     </ul>
   </nav>
+<div id="result"></div>
 
   <section class="section-intro">
     <header>
@@ -70,6 +76,8 @@
       </p>
     </article>
   </section>
+
+ 
 
   <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
     <div class="carousel-inner">
@@ -140,50 +148,115 @@
 
 
     
+<script>
+  $(document).ready(function () {
+    // Check if the user has a cookie
+    var userCookie = getCookie("username");
 
-    <script>
-        $(document).ready(function () {
-            // Your other scripts
+    if (userCookie) {
+      // User is logged in, hide the signup button
+     
+      $("#signupButton").hide();
+      $("#Loginbtn").hide();
+    }
+  });
 
-            // Example: Hide the signup button when the document is ready
-            $("#signupButton").hide();
-        });
-    </script>
-    <script>
-      $(document).ready(function () {
-        $('button.btn').on('click', function (event) {
-            // Prevent the default form submission behavior
-            event.preventDefault();
+  // Function to get the value of a cookie
+  function getCookie(cookieName) {
+    var name = cookieName + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var cookieArray = decodedCookie.split(';');
 
-            // Retrieve form data
-            var formData = {
-                name: $('#exampleInputName1').val(),
-                phoneNumber: $('#exampleInputphoneNumber1').val()
-            };
+    for (var i = 0; i < cookieArray.length; i++) {
+      var cookie = cookieArray[i];
+      while (cookie.charAt(0) === ' ') {
+        cookie = cookie.substring(1);
+      }
+      if (cookie.indexOf(name) === 0) {
+        return cookie.substring(name.length, cookie.length);
+      }
+    }
 
-            // Perform AJAX request to submit.php
+    return null;
+  }
+  $(document).ready(function () {
+        // Handle logout when the button is clicked
+        $('#logoutButton').on('click', function () {
+            // Make an AJAX request to logout.php
             $.ajax({
-                type: 'POST',
-                url: 'submit.php',
-                data: formData,
-                dataType: 'json',
-                success: function (response) {
-                    if (response.status === 'success') {
-                        Swal.fire('Success', response.message, 'success');
-                        // Additional logic after successful form submission
-                    } else {
-                        Swal.fire('Error', response.message, 'error');
-                    }
+                url: 'Logout.php',
+                method: 'GET',
+                success: function () {
+                    // Redirect to the home page or login page after successful logout
+                    window.location.href = 'index.php';
                 },
                 error: function () {
-                    Swal.fire('Error', 'An error occurred during form submission.', 'error');
+                    console.error('Failed to logout.');
                 }
             });
         });
     });
+  $(document).ready(function () {
+        // Use jQuery AJAX to load the content of file.php
+        $.ajax({
+            url: 'check.php',
+            method: 'GET',
+            dataType: 'json',
+            success: function (response) {
+                // Display the content in a jQuery Confirm dialog 
+                //formSubmitted = true; // Set the formSubmitted variable to true
+                if (response.status === 'success') {
+                      Swal.fire('Success', response.message, 'success');
+            }}
+        });
+    });
+    $(document).ready(function () {
+      // Your other scripts
+      
 
+      // Example: Hide the signup button when the document is ready
+      
+  
+      // Variable to track if the form has been submitted
+      var formSubmitted = false;
+  
+      // Event listener for the form submission
+      $('button.btn').on('click', function (event) {
+          // Prevent the default form submission behavior
+          event.preventDefault();
+  
+          // Retrieve form data
+          var formData = {
+              name: $('#exampleInputName1').val(),
+              phoneNumber: $('#exampleInputphoneNumber1').val()
+          };
+  
+          // Perform AJAX request to submit.php
+          $.ajax({
+              type: 'POST',
+              url: 'submit.php',
+              data: formData,
+              dataType: 'json',
+              success: function (response) {
+                  formSubmitted = true; // Set the formSubmitted variable to true
+                  if (response.status === 'success') {
+                      Swal.fire('Success', response.message, 'success');
+                      // Additional logic after successful form submission
+                  } else {
+                      Swal.fire('Error', response.message, 'error');
+                  }
+              },
+              error: function () {
+                  Swal.fire('Error', 'An error occurred during form submission.', 'error');
+              }
+          });
+      });
+  
+      // Check if the user is already logged in
+      
+  }); 
+</script>  
 
-</script>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
   <script

@@ -22,6 +22,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $insertQuery = "INSERT INTO users (username, password) VALUES ('$username', '$password')";
 
         if (mysqli_query($con, $insertQuery)) {
+            // Set a cookie upon successful signup
+            setcookie("username", $username, time() + (86400 * 30), "/"); // Cookie lasts for 30 days
+
             echo json_encode(array('status' => 'success', 'message' => 'Successfully Registered.'));
             exit();
         } else {
