@@ -7,11 +7,11 @@ if (isset($_COOKIE["username"])) {
     setcookie("username", "", time() - 3600, "/"); // Expire the cookie
 
     // Redirect to the home page or login page after logout
-    header("Location: index.php");
+    header("Location: Login.html");
     exit();
 } else {
     // Redirect to the home page or login page if the cookie is not set
-    header("Location: index.php");
+    header("Location: Login.html");
     exit();
 }
 ?>

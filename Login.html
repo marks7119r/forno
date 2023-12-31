@@ -48,8 +48,11 @@
     <script>
         $(document).ready(function () {
             // Simulate a condition where credentials are invalid
+            var messageShown = sessionStorage.getItem('messageShown');
+            
             var credentialsInvalid = true;
 
+            
             if (credentialsInvalid) {
                 $.confirm({
                     title: 'Invalid Credentials',

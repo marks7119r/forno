@@ -51,7 +51,7 @@
         <a id="Loginbtn" href="Login.html">login</a>
       </li>
       <li class="nav-item">
-        <a id="Logoutbtn" href="index.php">Logout</a>
+        <a id="Logoutbtn" href="Logout.php">Logout</a>
       </li>
     </ul>
   </nav>
@@ -158,6 +158,8 @@
      
       $("#signupButton").hide();
       $("#Loginbtn").hide();
+    }else{
+      $("#Logoutbtn").hide();
     }
   });
 
@@ -181,7 +183,7 @@
   }
   $(document).ready(function () {
         // Handle logout when the button is clicked
-        $('#logoutButton').on('click', function () {
+        $('#Logoutbtn').on('click', function () {
             // Make an AJAX request to logout.php
             $.ajax({
                 url: 'Logout.php',
