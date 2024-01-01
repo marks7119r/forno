@@ -51,7 +51,7 @@
         <a id="Loginbtn" href="Login.html">login</a>
       </li>
       <li class="nav-item">
-        <a id="Logoutbtn" href="Logout.php">Logout</a>
+        <a id="Logoutbtn" href="index.php">Logout</a>
       </li>
     </ul>
   </nav>
@@ -62,7 +62,7 @@
       <h1>Forno</h1>
     </header>
     <div class="link-to-book-wrapper">
-      <a id="book" class="link-to-book" href="Reservation.html">Book a table</a>
+      <a class="link-to-book" href="#reservations">Book a table</a>
     </div>
   </section>
 
@@ -158,21 +158,7 @@
      
       $("#signupButton").hide();
       $("#Loginbtn").hide();
-    }else{
-      $("#Logoutbtn").hide();
     }
-    $("#book").on("click", function (event) {
-      // Prevent the default link behavior
-      event.preventDefault();
-
-      // Check if the user is logged in
-      if (userCookie) {
-        // User is logged in, proceed with the booking logic here
-      window.location.href = "Reservation.html";
-      } else {
-        // User is not logged in, show a message or redirect to the login page
-        Swal.fire('Login Required', 'Please log in to book a table.', 'info');
-      }})
   });
 
   // Function to get the value of a cookie
@@ -195,7 +181,7 @@
   }
   $(document).ready(function () {
         // Handle logout when the button is clicked
-        $('#Logoutbtn').on('click', function () {
+        $('#logoutButton').on('click', function () {
             // Make an AJAX request to logout.php
             $.ajax({
                 url: 'Logout.php',
